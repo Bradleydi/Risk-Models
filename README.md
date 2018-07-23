@@ -13,4 +13,4 @@ Future works:
 Covariance Estimation Methods
 - Linear LW and Non-linear LW
 - OAS
-- Garch
+
