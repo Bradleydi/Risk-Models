@@ -7,10 +7,9 @@ Including:
 - Eigenfactor Risk Adjustment
 - Volatility Regime Adjustment
 
-Future works:
-- Bayesian Shrinkage on Specific Risk
-
 Covariance Estimation Methods
 - Linear LW and Non-linear LW
 - OAS
 
+Future works:
+- Bayesian Shrinkage on Specific Risk
