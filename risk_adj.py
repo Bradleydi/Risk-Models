@@ -108,3 +108,28 @@ def NW_adjusted(data,tau=90,length=100,n_start=100,n_forward=21,NW=1):
         return
     
     return data_cov, U, F_NW, R_eigen, np.sqrt(Var_eigen)
+
+
+def Eigen_adjusted(F_NW,U,Std_i,length=252,N_mc=1000):
+    
+    for i in range(N_mc):
+        
+        if i%200==0:print(i)
+        
+        r_mc = np.array([np.random.normal(0, std_, length) for std_ in Std_i])
+        r_mc = np.dot(U,r_mc)
+        
+        
+        F_mc = np.cov(r_mc)
+        s, U_mc = linalg.eigh(F_mc)
+        q = (U_mc.T@F_NW)@(U_mc)
+        
+        
+        if i==0:
+            stat = np.diagonal(q)/s
+        else:
+            stat+= np.diagonal(q)/s
+    
+    stat = np.sqrt(stat/N_mc)
+    
+    return stat
