@@ -1,4 +1,4 @@
-# Barra
+# Risk Models
 
 Risk estimation algorithms based on Barra US Equity Model (USE4). 
 
@@ -9,3 +9,8 @@ Including:
 
 Future works:
 - Bayesian Shrinkage on Specific Risk
+
+Covariance Estimation Methods
+- Linear LW and Non-linear LW
+- OAS
+- Garch
