@@ -10,6 +10,7 @@ import datetime
 import pickle
 import csv
 
+from scipy import linalg
 
 from risk_adj import Covariance_NW, NW_adjusted, Eigen_adjusted
 
