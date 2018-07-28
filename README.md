@@ -15,9 +15,8 @@ Covariance Estimation Methods:
 Future works:
 - Bayesian Shrinkage on Specific Risk
 
-Dependencies
-
-Python 
+Dependencies:
+- Python 
 - NumPy 
 - SciPy 
 - Sklearn
