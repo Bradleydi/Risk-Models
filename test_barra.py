@@ -331,3 +331,73 @@ plt.plot(BF_befor_after)
 
 
 
+'''
+def cal_r_port(P):
+    
+    portfolio = P
+        
+    r=[1.]
+    r_bench=[1.]
+    port_dates = list(portfolio.keys())
+    
+    for i in range(len(portfolio.keys())-1):
+        
+        print(port_dates[i])
+        
+        date_1 = port_dates[i]
+        date_2 = port_dates[i+1]
+        
+        stocks_ = portfolio[port_dates[i]].index.tolist()
+        
+        rawdata1 = pd.DataFrame( w.wsd(stocks_, "close", date_1, date_2, "Period=D;PriceAdj=F").Data )
+        
+        r_ = (rawdata1.iloc[:,-1]/rawdata1.iloc[:,0]) @ portfolio[port_dates[i]].values
+        
+        r.append(r[-1]*r_[0])
+        
+        '''
+        rawdata_bench1 = w.wsd('000906.SH', "close", date_1, date_1, "PriceAdj=F")
+        rawdata_bench2 = w.wsd('000906.SH', "close", date_2, date_2, "PriceAdj=F")
+        
+        r_ = rawdata_bench2.Data[0][0]/rawdata_bench1.Data[0][0]
+        
+        r_bench.append(r_bench[-1]*r_)
+        '''
+    
+    rawdata_bench1 = w.wsd('000905.SH', "close", port_dates[0], port_dates[-1], "Period=D;PriceAdj=F")
+    
+    r_ = pd.DataFrame(rawdata_bench1.Data[0])
+    r_.index = rawdata_bench1.Times
+    r_ = r_[0]/r_[0][0]
+    
+    
+    return r,r_
+
+
+r1,r_bench = cal_r_port(portfolio)
+
+
+
+r_port = pd.DataFrame([list(np.array(r1))]).T
+r_port.index = list(portfolio.keys())
+
+dates_bench = r_bench.index.tolist()
+dates_bench = [x.strftime("%Y-%m-%d") for x in dates_bench]
+r_bench.index = dates_bench
+
+r_port = pd.concat([r_port,r_bench],axis=1)
+r_port = r_port.dropna()
+r_port.columns = [0,1]
+r_port[2] = r_port[0]/r_port[1]
+
+r_port.index = [datetime.strptime(x, "%Y-%m-%d") for x in r_port.index.tolist()]
+
+plt.plot(r_port)
+plt.grid()
+
+
+
+print(r_port[0].pct_change().std()*np.sqrt(12))
+print(r_port[1].pct_change().std()*np.sqrt(12))
+
+'''
