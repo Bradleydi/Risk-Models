@@ -7,10 +7,18 @@ Including:
 - Eigenfactor Risk Adjustment
 - Volatility Regime Adjustment
 
-Covariance Estimation Methods
+Covariance Estimation Methods:
 - Linear LW and Non-linear LW
 - OAS
 - Garch estimation
 
 Future works:
 - Bayesian Shrinkage on Specific Risk
+
+Dependencies
+
+Python 
+- NumPy 
+- SciPy 
+- Sklearn
+- Cvxpy
