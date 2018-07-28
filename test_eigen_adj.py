@@ -13,18 +13,18 @@ import csv
 
 from risk_adj import Covariance_NW, NW_adjusted, Eigen_adjusted
 
-
+# read factors data
 data = pd.read_csv('factor_r_sqrt_000905.csv')
 data = data.iloc[:,2:]
 data = data.dropna()
 
+# parameters
 length = 252
 n_forward = 21
 tau = 90
 
 Bias=[]
 stat_all=[]
-
 
 # Calulate bias statistics
 for i in range(length,data.shape[0]-n_forward,1):
@@ -80,8 +80,12 @@ plt.plot(gamma_k_new,'-*')
 
 
 # Eigen-adjused step
+# Here we use gamma_k_new to adjust F_NW
+# The gamma_k_new should be calucalted with in-sample data, but it costs long CPU time. 
+# Thus, we use gamma_k_new from previous step, with future information, for simplicity.
 
-b2=[]
+
+b2=[]   # bias
 
 for i in range(length,data.shape[0]-n_forward,1):
     
@@ -103,7 +107,64 @@ plt.plot(B2,'-*')
 
 
 
+# Volatility Regime Adjustment Step
 
+# parameters
+tau = 42
+lambd = 0.5**(1./tau)
+w = np.array([lambd**n for n in range(252)][::-1])
+
+# BF is the factor cross-sectional bias statistic, formula (4.3) of UNE4
+# lambda_F is the factor volatility multiplier, formula (4.4) of UNE4
+# CSV is the factor cross-sectional volatility, formula (4.6) of UNE4
+
+BF_t_all=[]
+lambda_F=[]
+lambda_F_all=[]
+BF_t_vra_all=[]
+CSV = []
+
+for i in range(length,data.shape[0]-n_forward,1):
+    
+    data_cov, U, F_NW, R_i, Std_i = NW_adjusted(data,tau=tau,length=length,n_start=i,n_forward=n_forward,NW=0)
+    
+    s, U = linalg.eigh(F_NW)
+    
+    F_eigen = U@(np.diag(np.power(gamma_k_new,2))@np.diag(s))@U.T
+    
+    s2, U2 = linalg.eigh(F_eigen)
+    
+    f_kt = data.iloc[i,:].values
+    b_ = f_kt / np.sqrt(np.diag(F_eigen))
+    BF_t = np.sqrt(np.mean(b_@b_))
+    BF_t_all.append(BF_t)
+    
+    CSV.append (np.sqrt(np.mean(f_kt@f_kt)) )
+    
+    
+    if i>length+252:
+        lambda_F = np.sqrt( np.power(BF_t_all[i-length-252:i-length],2)@w / w.sum() )
+        lambda_F_all.append( lambda_F )
+    
+        F_VRA = np.diag([lambda_F**2]*40)@F_eigen
+        b_vra = f_kt / np.sqrt(np.diag(F_VRA))
+        BF_t = np.sqrt(np.mean(b_vra@b_vra))
+        BF_t_vra_all.append(BF_t)
+
+
+# plot CSV, Figure 4.6 of UNE4
+plt.plot(pd.DataFrame(CSV).rolling(30).mean())
+
+# plot factor volatility multiplier, Figure 4.6 of UNE4
+plt.plot(lambda_F_all)
+
+BF_befor_after = pd.DataFrame(BF_t_all).rolling(120).mean()
+BF_befor_after[1] = [np.nan]*(len(BF_t_all)-len(BF_t_vra_all))+BF_t_vra_all
+BF_befor_after = BF_befor_after.dropna()
+BF_befor_after[1] = BF_befor_after[1].rolling(120).mean()
+
+# Figure 4.7 of UNE4
+plt.plot(BF_befor_after)
 
 
 
