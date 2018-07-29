@@ -24,8 +24,8 @@ Dependencies:
 
 Materials:
 
->Martin J. Wainwright, [High-dimensional statistics: A Non-asymptotic Viewpoint]
-(http://www.cambridge.org/cn/academic/subjects/statistics-probability/statistical-theory-and-methods/high-dimensional-statistics-non-asymptotic-viewpoint?format=HB)
+>Martin J. Wainwright.
+[High-dimensional statistics: A Non-asymptotic Viewpoint](http://www.cambridge.org/cn/academic/subjects/statistics-probability/statistical-theory-and-methods/high-dimensional-statistics-non-asymptotic-viewpoint?format=HB)
 
 >Roman Vershynin, High-Dimensional Probability with Applications in Data Science.
 
@@ -44,8 +44,6 @@ Materials:
 >Sara van de Geer, Empirical processes in M-estimation.
 
 
->Arthur Mensch, Julien Mairal, Bertrand Thirion, Gaël Varoquaux.
-[Stochastic Subsampling for Factorizing Huge Matrices](https://hal.archives-ouvertes.fr/hal-01431618v1). <hal-01431618> 2017.
 
 >Arthur Mensch, Julien Mairal, Bertrand Thirion, Gaël Varoquaux.
 [Dictionary Learning for Massive Matrix Factorization](https://hal.archives-ouvertes.fr/hal-01308934v2). International Conference
