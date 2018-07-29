@@ -24,14 +24,23 @@ Dependencies:
 
 Materials:
 
->Martin J. Wainwright, [High-dimensional statistics: A Non-asymptotic Viewpoint] (http://www.cambridge.org/cn/academic/subjects/statistics-probability/statistical-theory-and-methods/high-dimensional-statistics-non-asymptotic-viewpoint?format=HB)
+>Martin J. Wainwright, [High-dimensional statistics: A Non-asymptotic Viewpoint]
+(http://www.cambridge.org/cn/academic/subjects/statistics-probability/statistical-theory-and-methods/high-dimensional-statistics-non-asymptotic-viewpoint?format=HB)
+
 >Roman Vershynin, High-Dimensional Probability with Applications in Data Science.
+
 >Evarist Giné and Richard Nickl, Mathematical Foundations of Infinite-Dimensional Statistical Models.
+
 >Peter Bülmann and Sara van de Geer, Statistics for High-dimensional Data: Methods, Theory and Applications.
+
 >Alexandre B. Tsybakov, Introduction to Nonparametric Estimation.
+
 >Roman Vershynin, Introduction to the Non-asymptotic Analysis of Random matrices.
+
 >Vladimir Koltchinskii, Oracle Inequalities in Empirical Risk Minimization and Sparse Recovery Problems.
+
 >Stéphane Boucheron, Gábor Lugosi and Pascal Massart, Concentration Inequalities: A Non-Asymptotic Theory of Independence.
+
 >Sara van de Geer, Empirical processes in M-estimation.
 
 
