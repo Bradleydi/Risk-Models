@@ -291,7 +291,7 @@ for i in range(length,data.shape[0]-n_forward,1):
     
     s, U = linalg.eigh(F_NW)
     
-    F_eigen = U@(np.diag(np.power(gamma_k_new,2))@np.diag(s))@U.T
+    F_eigen = U@(np.diag(np.power(v_k_new,2))@np.diag(s))@U.T
     
     s2, U2 = linalg.eigh(F_eigen)
     
