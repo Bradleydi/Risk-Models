@@ -135,20 +135,34 @@ def cal_bais_stat(data_factor,length=252,n_forward=21,tau=90,N_mc=1000,NW=0):
 
 
 if __name__ == '__main__':
-
-    data_factor = pd.read_csv('factor_r_sqrt_000905.csv')
-    data_factor = data_factor.iloc[:,2:]
-    data_factor = data_factor.dropna()
     
     length = 252
     n_forward = 21
     tau = 90
     
-    bias_eigen,stat_all = cal_bais_stat(data_factor,length=252,n_forward=21,tau=90,N_mc=1000,NW=0)
+    factor_return = pd.read_csv('factor_r_sqrt_000905.csv')
+    factors = pd.read_csv('factors_000905_2010_2018_spr.csv')
     
+    # 因子值&特异收益率
+    factor_return = factor_return.dropna()
+    factors = factors.dropna()
+    dates = list(set(factor_return['TRADEDATE']).intersection(set(factors['TRADEDATE'].unique())))
+    dates.sort()
+    factor_return = factor_return[factor_return['TRADEDATE'].isin(dates)]
+    factor_return.sort_values(['TRADEDATE'],ascending=True,inplace=True)
+    factor_return.index = range(len(factor_return))
+    factors = factors[factors['TRADEDATE'].isin(dates)]
+    # 特异收益率
+    spr_ret = factors.pivot(index='STOCKCODE',columns='TRADEDATE',values='SPECIFIC_RET')
+    spr_ret = spr_ret[dates]
+    factor_return = factor_return.iloc[:,1:]
+    bias_eigen,stat_all = cal_bais_stat(factor_return,length=length,n_forward=n_forward,tau=tau,N_mc=1000,NW=0)
     v_k = np.array(stat_all).mean(axis=0)
     v_k_new = v_fitting_modified(v_k,amp=2.,n_start_fitting=16)
-
+    weights = EWMA(n=252,tau=42,norm=1)
+    
+    # 因子列表
+    fields = list(factor_return.columns)[1:]
 
     '''
     # Bias statistics of eigenfactors using the unadjusted covariance matrix 
@@ -168,21 +182,8 @@ if __name__ == '__main__':
     # Figure 4.3 of UNE4
     plt.plot(v_k_new)
     '''
-
     
-    # get specific return data
-    spr_ret = Get_data_spr()
-    data_spr = pd.read_csv('factors_000905_2010_2018_spr.csv')
-    data_spr['TRADEDATE'] = [str(x)[:4]+'-'+str(x)[4:6]+'-'+str(x)[6:] for x in data_spr['TRADEDATE'].tolist()]
-    
-    dates = spr_ret.columns.tolist()
-    
-    weights = EWMA(n=252,tau=42,norm=1)
-    
-    length = 252
-    n_forward = 21
-    tau = 90
-    n_dates = data_factor.shape[0]
+    n_dates = factor_return.shape[0]
     
     BF_t_all=[]
     CSV = []
@@ -192,26 +193,28 @@ if __name__ == '__main__':
     
     portfolio={}
     
-    for i in range(length,n_dates-n_forward,1):
+    for i in range((length+n_forward),n_dates,1):
         
+        nwid = i-n_forward
         date_i = dates[i]
         
-        data_cov, U, F_NW, R_i, Std_i = NW_adjusted(data_factor,tau=tau,n_start=i,NW=0)
+        data_cov, U, F_NW, R_i, Std_i = NW_adjusted(factor_return,tau=tau,n_start=nwid,length=length
+                                                    ,n_forward=n_forward,NW=0)
         
         s, U = linalg.eigh(F_NW)
         
         # eigen adjusted
-        F_eigen = U@(np.diag(np.power(gamma_k_new,2))@np.diag(s))@U.T
+        F_eigen = U@(np.diag(v_k_new**2)@np.diag(s))@U.T
         
-        f_kt = data_factor.iloc[i,:].values
+        f_kt = factor_return.iloc[nwid,:].values
         b_ = f_kt / np.sqrt(np.diag(F_eigen))
         BF_t = np.sqrt(np.mean(b_@b_))
         BF_t_all.append(BF_t)
             
         CSV.append (np.sqrt(np.mean(f_kt@f_kt)) )
         
-        if i>length+252 and (i-length-252)%20==0:
-            lambda_F = np.sqrt( np.power(BF_t_all[i-length-252:i-length],2) @ weights )
+        if i>(n_forward+length+252) and (i-n_forward-length-252) % 20 == 0:
+            lambda_F = np.sqrt( np.power(BF_t_all[-252:],2) @ weights )
             lambda_F_all.append( lambda_F )
         
             F_VRA = np.diag([lambda_F**2]*F_eigen.shape[0])@F_eigen 
@@ -219,10 +222,10 @@ if __name__ == '__main__':
             BF_t = np.sqrt(np.mean(b_vra@b_vra))
             BF_t_vra_all.append(BF_t)
         
-            X = data_spr[data_spr['TRADEDATE']==date_i]
+            X = factors[factors['TRADEDATE']==date_i]
             X = X.sort_values(by=['STOCKCODE'])
-            stocks_i =  X['STOCKCODE'].tolist()
-            X = X.iloc[:,4:-2]
+            stocks_i = X['STOCKCODE'].tolist()
+            X = X[fields]
             X = np.concatenate([np.ones((X.shape[0],1)), X ],axis=1)
             
             
@@ -234,7 +237,7 @@ if __name__ == '__main__':
             specific_risk = np.diag(data_temp.var(axis=1).values)
             
             Risk = Risk_1 + specific_risk
-    
+            
             P = cp.Variable(Risk.shape[0])
             objective = cp.Minimize(cp.quad_form(P, Risk))
             '''
@@ -285,17 +288,18 @@ lambda_F_all=[]
 BF_t_vra_all=[]
 
 
-for i in range(length,data.shape[0]-n_forward,1):
+for i in range(length+n_forward,data.shape[0],1):
+    nwid = i-n_forward
     if i%20==0: print("i: ",i)
-    data_cov, U, F_NW, R_i, Std_i = NW_adjusted(data,tau=tau,length=length,n_start=i,n_forward=n_forward,NW=0)
+    data_cov, U, F_NW, R_i, Std_i = NW_adjusted(data_factor,tau=tau,n_start=nwid,length=length,n_forward=n_forward,NW=0)
     
     s, U = linalg.eigh(F_NW)
     
-    F_eigen = U@(np.diag(np.power(v_k_new,2))@np.diag(s))@U.T
+    F_eigen = U@(np.diag(v_k_new**2)@np.diag(s))@U.T
     
     s2, U2 = linalg.eigh(F_eigen)
     
-    f_kt = data.iloc[i,:].values
+    f_kt = data_factor.iloc[nwid,:].values
     b_ = f_kt / np.sqrt(np.diag(F_eigen))
     BF_t = np.sqrt(np.mean(b_@b_))
     BF_t_all.append(BF_t)
@@ -303,8 +307,8 @@ for i in range(length,data.shape[0]-n_forward,1):
     CSV.append (np.sqrt(np.mean(f_kt@f_kt)) )
     
     
-    if i>length+252:
-        lambda_F = np.sqrt( np.power(BF_t_all[i-length-252:i-length],2)@w / w.sum() )
+    if i>length+n_forward+252 and (i-n_forward-length-252)%1==0:
+        lambda_F = np.sqrt( np.power(BF_t_all[-252:],2) @ weights )
         lambda_F_all.append( lambda_F )
     
         F_VRA = np.diag([lambda_F**2]*40)@F_eigen
@@ -328,6 +332,8 @@ BF_befor_after[1] = BF_befor_after[1].rolling(120).mean()
 plt.plot(BF_befor_after)
 
 '''
+
+
 
 
 
