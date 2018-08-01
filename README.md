@@ -45,7 +45,9 @@ Advanced
 >Wolfgang Karl,
 [Applied Quantitative Finance](https://link.springer.com/book/10.1007%2F978-3-662-54486-0)
 
->Alexandre B. Tsybakov, Introduction to Nonparametric Estimation.
+>Alexandre B. Tsybakov,
+[Introduction to Nonparametric Estimation](https://link.springer.com/book/10.1007%2Fb13794)
+
 
 >Roman Vershynin, Introduction to the Non-asymptotic Analysis of Random matrices.
 
