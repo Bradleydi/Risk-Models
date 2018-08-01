@@ -27,11 +27,14 @@ Materials:
 >Martin J. Wainwright.
 [High-dimensional statistics: A Non-asymptotic Viewpoint](http://www.cambridge.org/cn/academic/subjects/statistics-probability/statistical-theory-and-methods/high-dimensional-statistics-non-asymptotic-viewpoint?format=HB)
 
->Roman Vershynin, High-Dimensional Probability with Applications in Data Science.
+>Roman Vershynin.
+[High-Dimensional Probability with Applications in Data Science](https://www.cambridge.org/core/books/highdimensional-probability/797C466DA29743D2C8213493BD2D2102)
 
->Evarist Giné and Richard Nickl, Mathematical Foundations of Infinite-Dimensional Statistical Models.
+>Evarist Giné and Richard Nickl.
+[Mathematical Foundations of Infinite-Dimensional Statistical Models](https://www.cambridge.org/core/books/mathematical-foundations-of-infinitedimensional-statistical-models/C9731BF27A4CDBDB297404EBF1B7820E)
 
->Peter Bülmann and Sara van de Geer, Statistics for High-dimensional Data: Methods, Theory and Applications.
+>Peter Bülmann and Sara van de Geer,
+[Statistics for High-dimensional Data: Methods, Theory and Applications](https://www.springer.com/us/book/9783642201912)
 
 >Alexandre B. Tsybakov, Introduction to Nonparametric Estimation.
 
