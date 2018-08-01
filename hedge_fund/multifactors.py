@@ -77,6 +77,7 @@ if __name__ == '__main__':
     IC_all = cal_IC(data,dates,names)
     
     T_p = 12
+    N_top = 100
     
     # ICIR 加权
     #ICIR = IC_all.rolling(T_p).mean()/IC_all.rolling(T_p).std()
@@ -99,7 +100,7 @@ if __name__ == '__main__':
         data_frame['scores'] = scores
         data_frame = data_frame.sort_values(by=['scores'],ascending=0)
         data_r_top = data_frame[data_frame['trade_s']!='-1']
-        r_ = data_r_top['ret'].iloc[:100].mean()
+        r_ = data_r_top['ret'].iloc[:N_top].mean()
         corr_.append(stats.spearmanr(data_frame['ret'],data_frame['scores'])[0])
         
         r.append(1+r_)
