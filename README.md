@@ -22,7 +22,13 @@ Dependencies:
 - Sklearn
 - Cvxpy
 
-Materials:
+# Materials:
+
+Elementary:
+
+>Maciej J. Capinski. Portfolio Theory and Risk Management.
+
+Advanced
 
 >Martin J. Wainwright.
 [High-dimensional statistics: A Non-asymptotic Viewpoint](http://www.cambridge.org/cn/academic/subjects/statistics-probability/statistical-theory-and-methods/high-dimensional-statistics-non-asymptotic-viewpoint?format=HB)
@@ -36,6 +42,9 @@ Materials:
 >Peter Bülmann and Sara van de Geer,
 [Statistics for High-dimensional Data: Methods, Theory and Applications](https://www.springer.com/us/book/9783642201912)
 
+>Wolfgang Karl,
+[Applied Quantitative Finance](https://link.springer.com/book/10.1007%2F978-3-662-54486-0)
+
 >Alexandre B. Tsybakov, Introduction to Nonparametric Estimation.
 
 >Roman Vershynin, Introduction to the Non-asymptotic Analysis of Random matrices.
@@ -45,8 +54,6 @@ Materials:
 >Stéphane Boucheron, Gábor Lugosi and Pascal Massart, Concentration Inequalities: A Non-Asymptotic Theory of Independence.
 
 >Sara van de Geer, Empirical processes in M-estimation.
-
-
 
 >Arthur Mensch, Julien Mairal, Bertrand Thirion, Gaël Varoquaux.
 [Dictionary Learning for Massive Matrix Factorization](https://hal.archives-ouvertes.fr/hal-01308934v2). International Conference
