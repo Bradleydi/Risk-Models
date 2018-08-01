@@ -48,14 +48,16 @@ Advanced
 >Alexandre B. Tsybakov,
 [Introduction to Nonparametric Estimation](https://link.springer.com/book/10.1007%2Fb13794)
 
-
->Roman Vershynin, Introduction to the Non-asymptotic Analysis of Random matrices.
+>Roman Vershynin,
+[Introduction to the Non-asymptotic Analysis of Random matrices](http://www-personal.umich.edu/~romanv/slides/RMT-course-IHP/RMT-course-IHP.pdf)
 
 >Vladimir Koltchinskii, Oracle Inequalities in Empirical Risk Minimization and Sparse Recovery Problems.
 
->Stéphane Boucheron, Gábor Lugosi and Pascal Massart, Concentration Inequalities: A Non-Asymptotic Theory of Independence.
+>Stéphane Boucheron, Gábor Lugosi and Pascal Massart,
+[Concentration Inequalities: A Non-Asymptotic Theory of Independence](http://www.oxfordscholarship.com/view/10.1093/acprof:oso/9780199535255.001.0001/acprof-9780199535255)
 
->Sara van de Geer, Empirical processes in M-estimation.
+>Sara van de Geer,
+[Empirical processes in M-estimation](http://www.stat.math.ethz.ch/~geer/cowlas.pdf)
 
 >Arthur Mensch, Julien Mairal, Bertrand Thirion, Gaël Varoquaux.
 [Dictionary Learning for Massive Matrix Factorization](https://hal.archives-ouvertes.fr/hal-01308934v2). International Conference
