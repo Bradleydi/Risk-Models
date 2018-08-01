@@ -51,7 +51,8 @@ Advanced
 >Roman Vershynin,
 [Introduction to the Non-asymptotic Analysis of Random matrices](http://www-personal.umich.edu/~romanv/slides/RMT-course-IHP/RMT-course-IHP.pdf)
 
->Vladimir Koltchinskii, Oracle Inequalities in Empirical Risk Minimization and Sparse Recovery Problems.
+>Vladimir Koltchinskii,
+[Oracle Inequalities in Empirical Risk Minimization and Sparse Recovery Problems](https://www.springer.com/us/book/9783642221460)
 
 >Stéphane Boucheron, Gábor Lugosi and Pascal Massart,
 [Concentration Inequalities: A Non-Asymptotic Theory of Independence](http://www.oxfordscholarship.com/view/10.1093/acprof:oso/9780199535255.001.0001/acprof-9780199535255)
