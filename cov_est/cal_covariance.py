@@ -32,7 +32,6 @@ import cvxpy as cp
 
 def fill_return(X):
 
-# X 是一个二维收益率 array，用线性差值的方法填补缺省值
     n = X.shape[0]
     p = X.shape[1]
 
@@ -54,7 +53,6 @@ def fill_return(X):
 	
 def fill_return2(X):
 
-# X 是一个二维 array， 如果每列的数据接近正态分布，用随机生成的正态分布数来填补缺省值
     n = X.shape[0]
     p = X.shape[1]
     XX = X.copy()
@@ -71,7 +69,6 @@ def fill_return2(X):
     return XX
 
 
-# 不会修改 data
 def pav(data):
 
     T, N = data.shape
@@ -82,8 +79,6 @@ def pav(data):
 
     return v
 
-
-# 会修改 y
 def pav_1d(y):
 
     y = np.asarray(y)
@@ -116,7 +111,6 @@ def pav_1d(y):
 
 
 def direct_kernel(X):
-# X 不能有 nan 数值
 
     n, p = X.shape
     X = X - np.mean(X, axis=0)
@@ -190,16 +184,8 @@ def OAS_est(X):
 
 
 
-# 计算 conditional volatility 和　target covariance by nonlinear shrinkage Ledoit(2017)
 
 def CCC_GARCH(X,K,method=1):
-
-# X是收益率 array，二维
-# 基于日频收益率，预测未来K天的协方差
-# 方法一是预测未来K日的条件协方差
-# 方法二是把最近K日历史条件协方差加总
-
-
 
     n, p = X.shape
 
