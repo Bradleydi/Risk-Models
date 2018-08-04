@@ -27,8 +27,11 @@ Dependencies:
 Elementary:
 
 >Maciej J. Capinski. Portfolio Theory and Risk Management.
+
 >Patrick Duvaut and Emmanuelle Jay. Risk-Based and Factor Investing
+
 >Peter Buhlmann. Statistics for High-Dimensional Data
+
 >Trevor Hastie. Statistical Learning with Sparsity The Lasso and Generalizations (Classic!)
 
 Advanced
